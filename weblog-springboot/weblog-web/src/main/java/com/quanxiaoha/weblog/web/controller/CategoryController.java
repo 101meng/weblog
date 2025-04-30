@@ -13,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:01
- * @description: 分类
- **/
+
 @RestController
 @RequestMapping("/category")
 @Api(tags = "分类")

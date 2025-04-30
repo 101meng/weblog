@@ -22,7 +22,7 @@
                     </svg>
                     <div class="ml-5">
                         <h2 class="mb-1">文章</h2>
-                        <CountTo :value="articleTotalCount"></CountTo>
+                        <CountTo :value="articleTotalCount" customClass="font-bold text-2xl"></CountTo>
                     </div>
                 </div>
             </div>
@@ -61,9 +61,9 @@
                             d="M258.131718 258.131718m56.587434 0l116.046099 0q56.587434 0 56.587433 56.587434l0 116.046099q0 56.587434-56.587433 56.587433l-116.046099 0q-56.587434 0-56.587434-56.587433l0-116.046099q0-56.587434 56.587434-56.587434Z"
                             fill="#FFFFFF" p-id="15669"></path>
                     </svg>
-                    <div class="ml-5">
+					<div class="ml-5">
                         <h2 class="mb-1">分类</h2>
-                        <CountTo :value="categoryTotalCount"></CountTo>
+                        <CountTo :value="categoryTotalCount" customClass="font-bold text-2xl"></CountTo>
                     </div>
                 </div>
             </div>
@@ -97,9 +97,9 @@
                             d="M368.664825 276.111295m30.714661 0l225.240854 0q30.714662 0 30.714661 30.714662l0 0q0 30.714662-30.714661 30.714662l-225.240854 0q-30.714662 0-30.714661-30.714662l0 0q0-30.714662 30.714661-30.714662Z"
                             fill="#FFFFFF" p-id="27767"></path>
                     </svg>
-                    <div class="ml-5">
+					<div class="ml-5">
                         <h2 class="mb-1">标签</h2>
-                        <CountTo :value="tagTotalCount"></CountTo>
+                        <CountTo :value="tagTotalCount" customClass="font-bold text-2xl"></CountTo>
                     </div>
                 </div>
             </div>
@@ -142,9 +142,9 @@
                         d="M570.9 690.9c57.4 0 104.2 46.4 104.2 104.2 0 57.4-46.4 104.2-104.2 104.2-57.9 0-104.2-46.4-104.2-104.2 0.4-57.3 46.8-104.2 104.2-104.2m0-44.4c-82.2 0-149.2 66.9-149.2 149.2s66.9 149.2 149.2 149.2S720.1 878 720.1 795.7s-67-149.2-149.2-149.2z"
                         fill="#333333" p-id="37379"></path>
                 </svg>
-                <div class="ml-5">
+				<div class="ml-5">
                     <h2 class="mb-1">总浏览量</h2>
-                    <CountTo :value="pvTotalCount"></CountTo>
+                    <CountTo :value="pvTotalCount" customClass="font-bold text-2xl"></CountTo>
                 </div>
             </div>
         </div>

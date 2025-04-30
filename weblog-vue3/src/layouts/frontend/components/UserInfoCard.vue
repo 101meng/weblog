@@ -2,17 +2,54 @@
     <div class="w-full py-5 px-2 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
         <div class="flex flex-col items-center">
             <!-- 博主头像 -->
-            <img class="w-24 h-26 mb-3 rounded-full shadow"
-                :src="blogSettingsStore.blogSettings.avatar"/>
+            <div class="relative mb-4">
+                <img class="w-14 h-14 rounded-full shadow"
+                :src="blogSettingsStore.blogSettings.avatar"/>    
+                <span
+                    class="bottom-0 left-10 absolute w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+            </div>
+
             <!-- 博主昵称 -->
-            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ blogSettingsStore.blogSettings.author }}</h5>
+            <h5 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">{{ blogSettingsStore.blogSettings.author }}</h5>
             <!-- 介绍语 -->
-            <span class="text-sm text-gray-500 dark:text-gray-400">{{ blogSettingsStore.blogSettings.introduction }}</span>
+            <span class="mb-5 text-sm text-gray-500 dark:text-gray-400" data-tooltip-target="introduction-tooltip-bottom"
+                data-tooltip-placement="bottom">{{ blogSettingsStore.blogSettings.introduction }}</span>
+                
+            <div id="introduction-tooltip-bottom" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                介绍语
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+
+			<!-- 文章数量、分类数量、标签数量、总访问量 -->
+            <div class="flex justify-center gap-5 mb-2">
+                <div @click="router.push('/archive/list')"
+                    class="flex items-center flex-col gap-1 hover:text-blue-700 hover:scale-110 cursor-pointer">
+                    <CountTo :value="statisticsInfo.articleTotalCount" customClass="text-lg font-bold"></CountTo>
+                    <div class="text-sm">文章</div>
+                </div>
+                <div @click="router.push('/category/list')"
+                    class="flex items-center flex-col gap-1 hover:text-blue-700 hover:scale-110 cursor-pointer">
+                    <CountTo :value="statisticsInfo.categoryTotalCount" customClass="text-lg font-bold"></CountTo>
+                    <div class="text-sm">分类</div>
+                </div>
+                <div @click="router.push('/tag/list')"
+                    class="flex items-center flex-col gap-1 hover:text-blue-700 hover:scale-110 cursor-pointer">
+                    <CountTo :value="statisticsInfo.tagTotalCount" customClass="text-lg font-bold"></CountTo>
+                    <div class="text-sm">标签</div>
+                </div>
+                <div class="flex items-center flex-col gap-1">
+                    <CountTo :value="statisticsInfo.pvTotalCount" customClass="text-lg font-bold"></CountTo>
+                    <div class="text-sm">总访问量</div>
+                </div>
+            </div>
+
+
             <!-- 第三方平台主页跳转（如 GitHub 等） -->
             <div class="flex justify-center gap-2">
                 <!-- GitHub -->
                 <svg @click="jump(blogSettingsStore.blogSettings.githubHomepage)" v-if="blogSettingsStore.blogSettings.githubHomepage" t="1698029949662" data-tooltip-target="github-tooltip-bottom" data-tooltip-placement="bottom"
-                    class="icon mt-5 w-7 h-7" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                    class="hover:scale-110 cursor-pointer icon mt-5 w-7 h-7 outline-none" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     p-id="1447" width="200" height="200">
                     <path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#4186F5" p-id="1448"></path>
                     <path
@@ -75,10 +112,12 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { getStatisticsInfo } from '@/api/frontend/statistics'
 import { useBlogSettingsStore } from '@/stores/blogsettings'
 import { initTooltips } from 'flowbite'
 import { onMounted } from 'vue'
-
+import CountTo from '@/components/CountTo.vue'
 // 初始化 Flowbit 组件
 onMounted(() => {
     initTooltips();
@@ -91,4 +130,11 @@ const jump = (url) => {
     // 在新窗口访问新的链接地址
     window.open(url, '_blank');
 } 
+
+const statisticsInfo = ref({})
+getStatisticsInfo().then(res => {
+    if (res.success) {
+        statisticsInfo.value = res.data
+    }
+})
 </script>

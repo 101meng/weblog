@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.quanxiaoha</groupId>
+            <artifactId>weblog-module-search</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.quanxiaoha</groupId>
             <artifactId>weblog-module-common</artifactId>
         </dependency>
 

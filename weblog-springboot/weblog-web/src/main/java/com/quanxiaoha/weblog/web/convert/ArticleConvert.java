@@ -9,12 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023/10/8 14:57
- * @description: 文章转换
- **/
+
 @Mapper
 public interface ArticleConvert {
     /**

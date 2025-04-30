@@ -12,12 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:01
- * @description: 文章归档
- **/
+
 @RestController
 @Api(tags = "文章归档")
 public class ArchiveController {

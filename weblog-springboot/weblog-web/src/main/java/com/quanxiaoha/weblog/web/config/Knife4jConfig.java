@@ -12,12 +12,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-16 7:53
- * @description: Knife4j 配置
- **/
 @Configuration
 @EnableSwagger2WebMvc
 @Profile("dev") // 只在 dev 环境中开启

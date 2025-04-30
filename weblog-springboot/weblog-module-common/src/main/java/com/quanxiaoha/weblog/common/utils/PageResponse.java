@@ -1,20 +1,12 @@
 package com.quanxiaoha.weblog.common.utils;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.quanxiaoha.weblog.common.exception.BaseExceptionInterface;
-import com.quanxiaoha.weblog.common.exception.BizException;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-11 19:50
- * @description: 分页响应参数工具类
- **/
+
 @Data
 public class PageResponse<T> extends Response<List<T>> {
 
@@ -38,13 +30,6 @@ public class PageResponse<T> extends Response<List<T>> {
      */
     private long pages;
 
-    /**
-     * 成功响应
-     * @param page Mybatis Plus 提供的分页接口
-     * @param data
-     * @return
-     * @param <T>
-     */
     public static <T> PageResponse<T> success(IPage page, List<T> data) {
         PageResponse<T> response = new PageResponse<>();
         response.setSuccess(true);
@@ -57,4 +42,16 @@ public class PageResponse<T> extends Response<List<T>> {
     }
 
 
+    public static <T> PageResponse<T> success(long total, long current, long size, List<T> data) {
+        PageResponse<T> response = new PageResponse<>();
+        response.setSuccess(true);
+        response.setCurrent(current);
+        response.setSize(size);
+        // 计算总页数
+        int pages = (int) Math.ceil((double) total / size);
+        response.setPages(pages);
+        response.setTotal(total);
+        response.setData(data);
+        return response;
+    }
 }
