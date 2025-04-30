@@ -1,15 +1,18 @@
-
 package com.quanxiaoha.weblog.common.aspect;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.quanxiaoha.weblog.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.UUID;
@@ -40,6 +43,12 @@ public class ApiOperationLogAspect {
             // MDC
             MDC.put("traceId", UUID.randomUUID().toString());
 
+            // 获取 HttpServletRequest
+            HttpServletRequest request = getHttpServletRequest();
+
+            // 获取客户端 IP
+            String clientIp = getClientIp(request);
+
             // 获取被请求的类和方法
             String className = joinPoint.getTarget().getClass().getSimpleName();
             String methodName = joinPoint.getSignature().getName();
@@ -52,9 +61,9 @@ public class ApiOperationLogAspect {
             // 功能描述信息
             String description = getApiOperationLogDescription(joinPoint);
 
-            // 打印请求相关参数
-            log.info("====== 请求开始: [{}], 入参: {}, 请求类: {}, 请求方法: {} =================================== ",
-                    description, argsJsonStr, className, methodName);
+            // 打印请求相关参数（新增 IP 字段）
+            log.info("====== 请求开始: [{}], IP: {}, 入参: {}, 请求类: {}, 请求方法: {} =================================== ",
+                    description, clientIp, argsJsonStr, className, methodName);
 
             // 执行切点方法
             Object result = joinPoint.proceed();
@@ -62,9 +71,9 @@ public class ApiOperationLogAspect {
             // 执行耗时
             long executionTime = System.currentTimeMillis() - startTime;
 
-            // 打印出参等相关信息
-            log.info("====== 请求结束: [{}], 耗时: {}ms, 出参: {} =================================== ",
-                    description, executionTime, JsonUtil.toJsonString(result));
+            // 打印出参等相关信息（新增 IP 字段，可根据需要选择是否在响应日志中保留）
+            log.info("====== 请求结束: [{}], IP: {}, 耗时: {}ms, 出参: {} =================================== ",
+                    description, clientIp, executionTime, JsonUtil.toJsonString(result));
 
             return result;
         } finally {
@@ -73,21 +82,53 @@ public class ApiOperationLogAspect {
     }
 
     /**
+     * 获取 HttpServletRequest
+     * @return
+     */
+    private HttpServletRequest getHttpServletRequest() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            return null; // 无请求上下文（如异步任务，可根据需求处理，此处返回 null 或抛出异常）
+        }
+        return attributes.getRequest();
+    }
+
+    /**
+     * 获取客户端 IP（支持代理场景）
+     * @param request
+     * @return
+     */
+    private String getClientIp(HttpServletRequest request) {
+        if (request == null) {
+            return "unknown";
+        }
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            // 处理 IPv6 回环地址，转换为 IPv4 格式（可选）
+            if (ip.equals("0:0:0:0:0:0:0:1")) {
+                ip = "127.0.0.1";
+            }
+        }
+        // 取第一个有效 IP
+        return ip.split(",")[0].trim();
+    }
+
+    /**
      * 获取注解的描述信息
      * @param joinPoint
      * @return
      */
     private String getApiOperationLogDescription(ProceedingJoinPoint joinPoint) {
-        // 1. 从 ProceedingJoinPoint 获取 MethodSignature
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-
-        // 2. 使用 MethodSignature 获取当前被注解的 Method
         Method method = signature.getMethod();
-
-        // 3. 从 Method 中提取 LogExecution 注解
         ApiOperationLog apiOperationLog = method.getAnnotation(ApiOperationLog.class);
-
-        // 4. 从 LogExecution 注解中获取 description 属性
         return apiOperationLog.description();
     }
 
@@ -98,5 +139,4 @@ public class ApiOperationLogAspect {
     private Function<Object, String> toJsonStr() {
         return arg -> JsonUtil.toJsonString(arg);
     }
-
 }

@@ -12,18 +12,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 文章发布
- **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ApiModel(value = "发布文章 VO")
 public class PublishArticleReqVO {
+
 
     @NotBlank(message = "文章标题不能为空")
     @Length(min = 1, max = 40, message = "文章标题字数需大于 1 小于 40")
@@ -42,4 +38,6 @@ public class PublishArticleReqVO {
 
     @NotEmpty(message = "文章标签不能为空")
     private List<String> tags;
+
+
 }

@@ -71,7 +71,10 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.quanxiaoha</groupId>
+			<artifactId>weblog-module-search</artifactId>
+		</dependency>
 	</dependencies>
 
 
