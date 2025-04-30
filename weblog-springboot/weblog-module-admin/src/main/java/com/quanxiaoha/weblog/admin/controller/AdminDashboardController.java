@@ -44,5 +44,4 @@ public class AdminDashboardController {
     public Response findDashboardPVStatistics() {
         return dashboardService.findDashboardPVStatistics();
     }
-
 }

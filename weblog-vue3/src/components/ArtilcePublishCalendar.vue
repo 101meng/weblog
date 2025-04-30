@@ -19,7 +19,7 @@ const props = defineProps({
 // 当前日期
 const currentDate = new Date();
 // 半年前
-const sixMonthsAgo = subMonths(currentDate, 6)
+const sixMonthsAgo = subMonths(currentDate, 5)
 
 // 格式化后的开始、结束日期
 const startDate = format(sixMonthsAgo, 'yyyy-MM-dd')

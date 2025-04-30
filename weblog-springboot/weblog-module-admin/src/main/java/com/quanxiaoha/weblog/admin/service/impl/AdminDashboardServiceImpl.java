@@ -127,34 +127,36 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         // 查询最近一周的 PV 访问量记录
         List<StatisticsArticlePVDO> articlePVDOS = articlePVMapper.selectLatestWeekRecords();
 
-        FindDashboardPVStatisticsInfoRspVO vo = null;
+        Map<LocalDate, Long> pvDateCountMap = Maps.newHashMap();
         if (!CollectionUtils.isEmpty(articlePVDOS)) {
             // 转 Map, 方便后续通过日期获取 PV 访问量
-            Map<LocalDate, Long> pvDateCountMap = articlePVDOS.stream()
+            pvDateCountMap = articlePVDOS.stream()
                     .collect(Collectors.toMap(StatisticsArticlePVDO::getPvDate, StatisticsArticlePVDO::getPvCount));
-
-            // 日期集合
-            List<String> pvDates = Lists.newArrayList();
-            // PV 集合
-            List<Long> pvCounts = Lists.newArrayList();
-
-            // 当前日期
-            LocalDate currDate = LocalDate.now();
-            // 一周前
-            LocalDate tmpDate = currDate.minusWeeks(1);
-            // 从一周前开始循环
-            for (; tmpDate.isBefore(currDate) || tmpDate.isEqual(currDate); tmpDate = tmpDate.plusDays(1)) {
-                // 设置对应日期的 PV 访问量
-                pvDates.add(tmpDate.format(Constants.MONTH_DAY_FORMATTER));
-                Long pvCount = pvDateCountMap.get(tmpDate);
-                pvCounts.add(Objects.isNull(pvCount) ? 0 : pvCount);
-            }
-
-            vo = FindDashboardPVStatisticsInfoRspVO.builder()
-                    .pvDates(pvDates)
-                    .pvCounts(pvCounts)
-                    .build();
         }
+
+        FindDashboardPVStatisticsInfoRspVO vo = null;
+
+        // 日期集合
+        List<String> pvDates = Lists.newArrayList();
+        // PV 集合
+        List<Long> pvCounts = Lists.newArrayList();
+
+        // 当前日期
+        LocalDate currDate = LocalDate.now();
+        // 一周前
+        LocalDate tmpDate = currDate.minusWeeks(1);
+        // 从一周前开始循环
+        for (; tmpDate.isBefore(currDate) || tmpDate.isEqual(currDate); tmpDate = tmpDate.plusDays(1)) {
+            // 设置对应日期的 PV 访问量
+            pvDates.add(tmpDate.format(Constants.MONTH_DAY_FORMATTER));
+            Long pvCount = pvDateCountMap.get(tmpDate);
+            pvCounts.add(Objects.isNull(pvCount) ? 0 : pvCount);
+        }
+
+        vo = FindDashboardPVStatisticsInfoRspVO.builder()
+                .pvDates(pvDates)
+                .pvCounts(pvCounts)
+                .build();
 
         return Response.success(vo);
     }

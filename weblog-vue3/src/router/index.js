@@ -132,6 +132,10 @@ const router = createRouter({
     history: createWebHashHistory(),
     // routes: routes 的缩写
     routes, 
+    // 每次切换路由后，页面滚动到顶部
+    scrollBehavior() {
+        return { top: 0 }
+    }
 })
 
 // 暴露出去

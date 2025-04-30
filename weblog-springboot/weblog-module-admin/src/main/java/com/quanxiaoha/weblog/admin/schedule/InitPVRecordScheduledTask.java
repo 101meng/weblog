@@ -10,12 +10,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023/11/12 12:02
- * @description: 初始化 PV 访问量定时任务
- **/
 @Component
 @Slf4j
 public class InitPVRecordScheduledTask {
@@ -23,8 +17,7 @@ public class InitPVRecordScheduledTask {
     @Autowired
     private StatisticsArticlePVMapper articlePVMapper;
 
-    @Scheduled(cron = "0 0 23 * * ?") // 每天晚间 23 点执行
-    // @Scheduled(cron = "0 * * * * ?") // 每一分钟执行一次
+    @Scheduled(cron = "0 0 2 * * ?")
     public void execute() {
         // 定时任务执行的业务逻辑
         log.info("==> 开始执行初始化明日 PV 访问量记录定时任务");

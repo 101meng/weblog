@@ -25,3 +25,4 @@ public class FindDashboardPVStatisticsInfoRspVO {
      */
     private List<Long> pvCounts;
 }
+
