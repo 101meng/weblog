@@ -15,6 +15,7 @@ import com.quanxiaoha.weblog.common.utils.Response;
 import com.quanxiaoha.weblog.web.convert.ArticleConvert;
 import com.quanxiaoha.weblog.web.model.vo.tag.FindTagArticlePageListReqVO;
 import com.quanxiaoha.weblog.web.model.vo.tag.FindTagArticlePageListRspVO;
+import com.quanxiaoha.weblog.web.model.vo.tag.FindTagListReqVO;
 import com.quanxiaoha.weblog.web.model.vo.tag.FindTagListRspVO;
 import com.quanxiaoha.weblog.web.service.TagService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:03
- * @description: 标签
- **/
+
 @Service
 @Slf4j
 public class TagServiceImpl implements TagService {
@@ -49,9 +45,18 @@ public class TagServiceImpl implements TagService {
      * @return
      */
     @Override
-    public Response findTagList() {
-        // 查询所有标签
-        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
+    public Response findTagList(FindTagListReqVO findTagListReqVO) {
+        Long size = findTagListReqVO.getSize();
+
+        List<TagDO> tagDOS = null;
+        // 如果接口入参中未指定 size
+        if (Objects.isNull(size) || size == 0) {
+            // 查询所有分类
+            tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
+        } else {
+            // 否则查询指定的数量
+            tagDOS = tagMapper.selectByLimit(size);
+        }
 
         // DO 转 VO
         List<FindTagListRspVO> vos = null;
@@ -60,6 +65,7 @@ public class TagServiceImpl implements TagService {
                     .map(tagDO -> FindTagListRspVO.builder()
                             .id(tagDO.getId())
                             .name(tagDO.getName())
+                            .articlesTotal(tagDO.getArticlesTotal())
                             .build())
                     .collect(Collectors.toList());
         }

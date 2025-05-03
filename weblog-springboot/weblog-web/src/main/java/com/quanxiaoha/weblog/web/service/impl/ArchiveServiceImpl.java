@@ -20,12 +20,7 @@ import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:03
- * @description: 文章归档
- **/
+
 @Service
 @Slf4j
 public class ArchiveServiceImpl implements ArchiveService {

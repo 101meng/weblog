@@ -14,12 +14,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023/10/31 21:16
- * @description: Markdown 转换器
- **/
+
 public class MarkdownHelper {
 
     /**

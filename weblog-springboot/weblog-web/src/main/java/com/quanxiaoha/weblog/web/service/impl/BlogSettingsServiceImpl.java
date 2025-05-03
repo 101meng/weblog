@@ -10,12 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:03
- * @description: 博客设置
- **/
+
 @Service
 @Slf4j
 public class BlogSettingsServiceImpl implements BlogSettingsService {

@@ -1,6 +1,7 @@
 package com.quanxiaoha.weblog.admin.event.subscriber;
 
 import com.quanxiaoha.weblog.admin.event.DeleteArticleEvent;
+import com.quanxiaoha.weblog.admin.service.AdminStatisticsService;
 import com.quanxiaoha.weblog.search.LuceneHelper;
 import com.quanxiaoha.weblog.search.index.ArticleIndex;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,8 @@ public class DeleteArticleSubscriber implements ApplicationListener<DeleteArticl
 
     @Autowired
     private LuceneHelper luceneHelper;
-
+    @Autowired
+    private AdminStatisticsService statisticsService;
     @Override
     @Async("threadPoolTaskExecutor")
     public void onApplicationEvent(DeleteArticleEvent event) {
@@ -35,5 +37,11 @@ public class DeleteArticleSubscriber implements ApplicationListener<DeleteArticl
         long count = luceneHelper.deleteDocument(ArticleIndex.NAME, condition);
 
         log.info("==> 删除文章对应 Lucene 文档结束，articleId: {}，受影响行数: {}", articleId, count);
+
+        // 重新统计各分类下文章总数
+        statisticsService.statisticsCategoryArticleTotal();
+        log.info("==> 重新统计各分类下文章总数");
+        statisticsService.statisticsTagArticleTotal();
+        log.info("==> 重新统计各标签下文章总数");
     }
 }

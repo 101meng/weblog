@@ -7,12 +7,7 @@ import com.quanxiaoha.weblog.common.domain.dos.UserDO;
 
 import java.time.LocalDateTime;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: TODO
- **/
+
 public interface UserMapper extends BaseMapper<UserDO> {
     default UserDO findByUsername(String username) {
         LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();

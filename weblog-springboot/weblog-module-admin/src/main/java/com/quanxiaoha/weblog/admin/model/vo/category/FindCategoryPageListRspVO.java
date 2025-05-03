@@ -1,21 +1,12 @@
 package com.quanxiaoha.weblog.admin.model.vo.category;
 
-import com.quanxiaoha.weblog.common.model.BasePageQuery;
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 分类分页
- **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,5 +27,10 @@ public class FindCategoryPageListRspVO {
      * 创建时间
      */
     private LocalDateTime createTime;
+
+    /**
+     * 文章总数
+     */
+    private Integer articlesTotal;
 
 }

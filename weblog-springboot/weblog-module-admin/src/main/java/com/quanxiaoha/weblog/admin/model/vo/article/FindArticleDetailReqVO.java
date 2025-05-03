@@ -8,12 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 文章详情
- **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

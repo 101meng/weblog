@@ -5,20 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FindCategoryArticlePageListRspVO {
-    private Long id;
-    private String cover;
-    private String title;
+public class FindCategoryListReqVO {
+
     /**
-     * 发布日期
+     * 展示数量
      */
-    private LocalDate createDate;
+    private Long size;
 
 }
+

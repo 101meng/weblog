@@ -6,12 +6,7 @@ import com.quanxiaoha.weblog.common.domain.dos.ArticleTagRelDO;
 
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: 文章标签关联
- **/
+
 public interface ArticleTagRelMapper extends InsertBatchMapper<ArticleTagRelDO> {
 
     /**

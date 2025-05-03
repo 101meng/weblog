@@ -10,12 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: TODO
- **/
+
 public interface TagMapper extends BaseMapper<TagDO> {
 
     /**
@@ -64,5 +59,11 @@ public interface TagMapper extends BaseMapper<TagDO> {
     default List<TagDO> selectByIds(List<Long> tagIds) {
         return selectList(Wrappers.<TagDO>lambdaQuery()
                 .in(TagDO::getId, tagIds));
+    }
+
+    default List<TagDO> selectByLimit(Long limit) {
+        return selectList(Wrappers.<TagDO>lambdaQuery()
+                .orderByDesc(TagDO::getArticlesTotal) // 根据文章总数降序
+                .last(String.format("LIMIT %d", limit))); // 查询指定数量
     }
 }

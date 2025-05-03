@@ -1,6 +1,7 @@
 package com.quanxiaoha.weblog.admin.event.subscriber;
 
 import com.quanxiaoha.weblog.admin.event.ReadArticleEvent;
+import com.quanxiaoha.weblog.admin.service.AdminStatisticsService;
 import com.quanxiaoha.weblog.common.domain.mapper.ArticleMapper;
 import com.quanxiaoha.weblog.common.domain.mapper.StatisticsArticlePVMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,12 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023/11/9 10:08
- * @description: TODO
- **/
+
 @Component
 @Slf4j
 public class ReadArticleSubscriber implements ApplicationListener<ReadArticleEvent> {
@@ -26,7 +22,8 @@ public class ReadArticleSubscriber implements ApplicationListener<ReadArticleEve
     private ArticleMapper articleMapper;
     @Autowired
     private StatisticsArticlePVMapper articlePVMapper;
-
+    @Autowired
+    private AdminStatisticsService statisticsService;
     @Override
     @Async("threadPoolTaskExecutor")
     public void onApplicationEvent(ReadArticleEvent event) {
@@ -47,5 +44,6 @@ public class ReadArticleSubscriber implements ApplicationListener<ReadArticleEve
         LocalDate currDate = LocalDate.now();
         articlePVMapper.increasePVCount(currDate);
         log.info("==> 当日文章 PV 访问量 +1 操作成功，date: {}", currDate);
+
     }
 }

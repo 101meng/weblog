@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FindTagListRspVO {
-    private Long id;
-    private String name;
-    private Integer articlesTotal;
+public class FindTagListReqVO {
+
+    /**
+     * 展示数量
+     */
+    private Long size;
+
 }

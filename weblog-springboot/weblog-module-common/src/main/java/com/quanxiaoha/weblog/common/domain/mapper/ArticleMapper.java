@@ -13,12 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: 文章
- **/
+
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**

@@ -28,12 +28,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:03
- * @description: 文章
- **/
+
 @Service
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {

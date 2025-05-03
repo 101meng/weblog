@@ -7,12 +7,7 @@ import com.quanxiaoha.weblog.common.domain.dos.StatisticsArticlePVDO;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: 每日文章 PV 访问量统计
- **/
+
 public interface StatisticsArticlePVMapper extends BaseMapper<StatisticsArticlePVDO> {
 
     /**

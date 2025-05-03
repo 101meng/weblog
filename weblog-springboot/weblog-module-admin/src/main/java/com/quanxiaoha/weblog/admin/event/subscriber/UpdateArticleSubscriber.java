@@ -1,6 +1,7 @@
 package com.quanxiaoha.weblog.admin.event.subscriber;
 
 import com.quanxiaoha.weblog.admin.event.UpdateArticleEvent;
+import com.quanxiaoha.weblog.admin.service.AdminStatisticsService;
 import com.quanxiaoha.weblog.common.constant.Constants;
 import com.quanxiaoha.weblog.common.domain.dos.ArticleContentDO;
 import com.quanxiaoha.weblog.common.domain.dos.ArticleDO;
@@ -28,7 +29,8 @@ public class UpdateArticleSubscriber implements ApplicationListener<UpdateArticl
     private ArticleMapper articleMapper;
     @Autowired
     private ArticleContentMapper articleContentMapper;
-
+    @Autowired
+    private AdminStatisticsService statisticsService;
     @Override
     @Async("threadPoolTaskExecutor")
     public void onApplicationEvent(UpdateArticleEvent event) {
@@ -60,5 +62,10 @@ public class UpdateArticleSubscriber implements ApplicationListener<UpdateArticl
         long count = luceneHelper.updateDocument(ArticleIndex.NAME, document, condition);
 
         log.info("==> 更新文章对应 Lucene 文档结束，articleId: {}，受影响行数: {}", articleId, count);
+        // 重新统计各分类下文章总数
+        statisticsService.statisticsCategoryArticleTotal();
+        log.info("==> 重新统计各分类下文章总数");
+        statisticsService.statisticsTagArticleTotal();
+        log.info("==> 重新统计各标签下文章总数");
     }
 }

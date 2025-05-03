@@ -12,12 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 更新文章
- **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

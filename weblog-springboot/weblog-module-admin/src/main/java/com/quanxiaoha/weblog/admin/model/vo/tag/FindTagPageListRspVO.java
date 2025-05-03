@@ -7,12 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 标签分页
- **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +27,10 @@ public class FindTagPageListRspVO {
      * 创建时间
      */
     private LocalDateTime createTime;
+
+    /**
+     * 文章总数
+     */
+    private Integer articlesTotal;
 
 }

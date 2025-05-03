@@ -10,12 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:01
- * @description: 分类
- **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +27,7 @@ public class CategoryDO {
     private LocalDateTime updateTime;
 
     private Boolean isDeleted;
+
+    private Integer articlesTotal;
 }
+

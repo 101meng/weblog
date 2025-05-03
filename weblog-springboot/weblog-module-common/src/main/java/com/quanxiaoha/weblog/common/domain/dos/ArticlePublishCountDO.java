@@ -7,12 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:01
- * @description: 以日为维度统计文章发布数量
- **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

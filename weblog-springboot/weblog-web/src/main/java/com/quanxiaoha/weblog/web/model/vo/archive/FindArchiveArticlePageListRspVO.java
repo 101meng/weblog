@@ -8,12 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.YearMonth;
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:07
- * @description: 文章归档
- **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

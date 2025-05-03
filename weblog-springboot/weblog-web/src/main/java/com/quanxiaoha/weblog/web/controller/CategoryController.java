@@ -3,6 +3,7 @@ package com.quanxiaoha.weblog.web.controller;
 import com.quanxiaoha.weblog.common.aspect.ApiOperationLog;
 import com.quanxiaoha.weblog.common.utils.Response;
 import com.quanxiaoha.weblog.web.model.vo.category.FindCategoryArticlePageListReqVO;
+import com.quanxiaoha.weblog.web.model.vo.category.FindCategoryListReqVO;
 import com.quanxiaoha.weblog.web.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,8 +26,8 @@ public class CategoryController {
     @PostMapping("/list")
     @ApiOperation(value = "前台获取分类列表")
     @ApiOperationLog(description = "前台获取分类列表")
-    public Response findCategoryList() {
-        return categoryService.findCategoryList();
+    public Response findCategoryList(@RequestBody @Validated FindCategoryListReqVO findCategoryListReqVO) {
+        return categoryService.findCategoryList(findCategoryListReqVO);
     }
 
     @PostMapping("/article/list")

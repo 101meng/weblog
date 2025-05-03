@@ -6,12 +6,6 @@ import com.quanxiaoha.weblog.common.domain.dos.UserRoleDO;
 
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: TODO
- **/
 public interface UserRoleMapper extends BaseMapper<UserRoleDO> {
     /**
      * 根据用户名查询

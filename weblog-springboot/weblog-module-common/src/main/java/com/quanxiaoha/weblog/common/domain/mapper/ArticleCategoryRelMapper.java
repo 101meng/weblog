@@ -6,12 +6,7 @@ import com.quanxiaoha.weblog.common.domain.dos.ArticleCategoryRelDO;
 
 import java.util.List;
 
-/**
- * @author: 犬小哈
- * @url: www.quanxiaoha.com
- * @date: 2023-08-22 17:06
- * @description: 文章分类关联
- **/
+
 public interface ArticleCategoryRelMapper extends BaseMapper<ArticleCategoryRelDO> {
 
     /**
