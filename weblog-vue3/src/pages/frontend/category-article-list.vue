@@ -2,16 +2,17 @@
     <Header></Header>
 
     <!-- 主内容区域 -->
-    <main class="container max-w-screen-xl mx-auto p-4">
+    <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4">
         <!-- grid 表格布局，分为 4 列 -->
         <div class="grid grid-cols-4 gap-7">
             <!-- 左边栏，占用 3 列 -->
             <div class="col-span-4 md:col-span-3 mb-3">
-                <!-- 分类文章列表 -->
-                <div class="p-5 mb-4 border border-gray-200 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700">
-                    <h1 class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">
+                <!-- 分类列表 -->
+                <div class="w-full p-5 pb-7 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
+                    <!-- 分类标题 -->
+                    <h2 class="flex items-center mb-5 font-bold text-gray-900 uppercase dark:text-white">
                         <!-- 文件夹图标 -->
-                        <svg t="1698998570037" class="icon w-5 h-5 mr-2" viewBox="0 0 1024 1024" version="1.1"
+                        <svg t="1698998570037" class="inline icon w-5 h-5 mr-2" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="21572" width="200" height="200">
                             <path
                                 d="M938.666667 464.592593h-853.333334v-265.481482c0-62.577778 51.2-113.777778 113.777778-113.777778h128.948148c15.17037 0 28.444444 3.792593 41.718519 11.377778l98.607407 64.474074h356.503704c62.577778 0 113.777778 51.2 113.777778 113.777778v189.62963z"
@@ -29,19 +30,42 @@
                                 d="M559.407407 512h-75.851851c-20.859259 0-37.925926-17.066667-37.925926-37.925926s17.066667-37.925926 37.925926-37.925926h75.851851c20.859259 0 37.925926 17.066667 37.925926 37.925926s-17.066667 37.925926-37.925926 37.925926z"
                                 fill="#F9D523" p-id="21577"></path>
                         </svg>
-                        {{ categoryName }}
-                    </h1>
-                    <ol v-if="articles && articles.length > 0" class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
+                        分类
+                        <span v-if="categories && categories.length > 0"
+                            class="ml-2 text-gray-600 font-normal dark:text-gray-300">
+                            ( {{ categories.length }} )
+                        </span>
+                    </h2>
+                    <!-- 分类列表 -->
+                    <div class="text-sm flex flex-wrap gap-3 font-medium text-gray-600 rounded-lg dark:border-gray-600 dark:text-white">
+                        <a @click="goCategoryArticleListPage(category.id, category.name)"
+                            v-for="(category, index) in categories" :key="index"
+                            :class="[route.query.name == category.name ? 'bg-sky-100 hover:bg-sky-200' : 'hover:bg-gray-100']"
+                            class="inline-flex cursor-pointer items-center px-4 py-2 text-sm font-medium text-center border rounded-lg 
+             focus:ring-4 focus:outline-none focus:ring-gray-300 
+            dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:hover:text-white">
+                            {{ category.name }}
+                            <span
+                                class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
+                                {{ category.articlesTotal }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 分类文章列表 -->
+                <div class="p-5 mb-4 border border-gray-200 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700 animate__animated animate__fadeInUp">
+                    <ol v-if="articles && articles.length > 0" class="divide-y divider-gray-200 dark:divide-gray-700">
                         <li v-for="(article, index) in articles" :key="index">
-                            <a @click="goArticleDetailPage(article.id)" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a @click="goArticleDetailPage(article.id)" class="cursor-pointer items-center block p-3 sm:flex hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-700">
                                 <img class="w-24 h-12 mb-3 mr-3 rounded-lg sm:mb-0" :src="article.cover" />
                                 <div class="text-gray-600 dark:text-gray-400">
-                                    <h2 class="text-base font-normal text-gray-900">
+                                    <h2 class="text-base font-normal text-gray-900 dark:text-white">
                                         {{ article.title }}
                                     </h2>
                                     <span
                                         class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-                                        <svg class="inline w-2.5 h-2.5 mr-2 text-gray-400 dark:text-white"
+                                        <svg class="inline w-2.5 h-2.5 mr-2 text-gray-400"
                                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -232,7 +256,7 @@
                 </div>
 
                 <!-- 分页 -->
-                <nav aria-label="Page navigation example" class="mt-10 flex justify-center" v-if="pages > 1">
+                <nav aria-label="Page navigation example" class="mt-10 flex justify-center">
                     <ul class="flex items-center -space-x-px h-10 text-base">
                         <!-- 上一页 -->
                         <li>
@@ -252,7 +276,7 @@
                         <li v-for="(pageNo, index) in pages" :key="index">
                             <a @click="getCategoryArticles(pageNo)"
                                 class="flex items-center justify-center px-4 h-10 leading-tight border  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                :class="[pageNo == current ? 'text-blue-600  bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700' : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700']">
+                                :class="[pageNo == current ? 'text-sky-600  bg-sky-50 border-sky-500 hover:bg-sky-100 hover:text-sky-700' : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700']">
                                 {{ index + 1 }}
                             </a>
                         </li>
@@ -306,7 +330,7 @@ import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getCategoryArticlePageList } from '@/api/frontend/category'
+import { getCategoryArticlePageList, getCategoryList } from '@/api/frontend/category'
 
 const route = useRoute()
 const router = useRouter()
@@ -354,5 +378,19 @@ getCategoryArticles(current.value)
 // 跳转文章详情页
 const goArticleDetailPage = (articleId) => {
     router.push('/article/' + articleId)
+}
+
+// 所有分类
+const categories = ref([])
+getCategoryList({}).then((res) => {
+    if (res.success) {
+        categories.value = res.data
+    }
+})
+
+// 跳转分类文章列表页
+const goCategoryArticleListPage = (id, name) => {
+    // 跳转时通过 query 携带参数（分类 ID、分类名称）
+    router.push({ path: '/category/article/list', query: { id, name } })
 }
 </script>

@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 27/04/2025 22:48:46
+ Date: 03/05/2025 19:37:00
 */
 
 SET NAMES utf8mb4;
@@ -32,15 +32,15 @@ CREATE TABLE `t_article`  (
   `read_num` int(0) UNSIGNED NOT NULL DEFAULT 1 COMMENT '被阅读次数',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_create_time`(`create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article
 -- ----------------------------
-INSERT INTO `t_article` VALUES (1, '沁园春 雪', 'http://113.44.234.225:9000/weblog/poem1.jpg', '', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0, 2);
-INSERT INTO `t_article` VALUES (17, '梦里常回祁连山', 'http://127.0.0.1:9000/weblog/66187e9b46b447fea9797803ec0a307e.jpg', '巍巍祁连，横贯千里', '2025-04-27 22:21:51', '2025-04-27 22:21:51', 0, 1);
-INSERT INTO `t_article` VALUES (18, '沉默强硬', 'http://127.0.0.1:9000/weblog/a1e0090a4afb43c5bb80a6a183005241.jpg', '', '2025-04-27 22:28:37', '2025-04-27 22:28:37', 0, 2);
-INSERT INTO `t_article` VALUES (19, '真情', 'http://127.0.0.1:9000/weblog/b7fe7cfb1f9c46d796de32773783cb63.jpg', '', '2025-04-27 22:46:41', '2025-04-27 22:46:41', 0, 1);
+INSERT INTO `t_article` VALUES (1, '沁园春 雪', 'http://113.44.234.225:9000/weblog/poem1.jpg', '', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0, 3);
+INSERT INTO `t_article` VALUES (17, '梦里常回祁连山', 'http://127.0.0.1:9000/weblog/66187e9b46b447fea9797803ec0a307e.jpg', '巍巍祁连，横贯千里', '2025-04-27 22:21:51', '2025-04-27 22:21:51', 0, 4);
+INSERT INTO `t_article` VALUES (18, '沉默', 'http://127.0.0.1:9000/weblog/a1e0090a4afb43c5bb80a6a183005241.jpg', '', '2025-04-27 22:28:37', '2025-04-27 22:28:37', 0, 19);
+INSERT INTO `t_article` VALUES (19, '真情', 'http://127.0.0.1:9000/weblog/b7fe7cfb1f9c46d796de32773783cb63.jpg', '', '2025-04-27 22:46:41', '2025-04-27 22:46:41', 0, 10);
 
 -- ----------------------------
 -- Table structure for t_article_category_rel
@@ -53,7 +53,7 @@ CREATE TABLE `t_article_category_rel`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_article_id`(`article_id`) USING BTREE,
   INDEX `idx_category_id`(`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章所属分类关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章所属分类关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article_category_rel
@@ -73,7 +73,7 @@ CREATE TABLE `t_article_content`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '教程正文',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_article_id`(`article_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章内容表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章内容表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article_content
@@ -94,7 +94,7 @@ CREATE TABLE `t_article_tag_rel`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_article_id`(`article_id`) USING BTREE,
   INDEX `idx_tag_id`(`tag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章对应标签关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章对应标签关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_article_tag_rel
@@ -120,12 +120,12 @@ CREATE TABLE `t_blog_settings`  (
   `gitee_homepage` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'Gitee 主页访问地址',
   `zhihu_homepage` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '知乎主页访问地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客设置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客设置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_blog_settings
 -- ----------------------------
-INSERT INTO `t_blog_settings` VALUES (1, 'http://113.44.234.225:9000/weblog/weblog-logo.png', 'Lin101的博客', 'Lin101', '激扬文字', 'http://113.44.234.225:9000/weblog/avatar.jpg', '', '', '', '');
+INSERT INTO `t_blog_settings` VALUES (1, 'http://113.44.234.225:9000/weblog/weblog-logo.png', 'Lin101的博客', 'Lin101', '激扬文字', 'http://113.44.234.225:9000/weblog/avatar.jpg', 'https://github.com/101meng/weblog', '', '', '');
 
 -- ----------------------------
 -- Table structure for t_category
@@ -137,17 +137,18 @@ CREATE TABLE `t_category`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后一次更新时间',
   `is_deleted` tinyint(0) NOT NULL DEFAULT 0 COMMENT '逻辑删除标志位：0：未删除 1：已删除',
+  `articles_total` int(0) NOT NULL DEFAULT 0 COMMENT '此分类下文章总数',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_name`(`name`) USING BTREE,
   INDEX `idx_create_time`(`create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_category
 -- ----------------------------
-INSERT INTO `t_category` VALUES (20, '诗词', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0);
-INSERT INTO `t_category` VALUES (21, '日记', '2025-04-27 14:20:01', '2025-04-27 14:20:01', 0);
-INSERT INTO `t_category` VALUES (22, '日常', '2025-04-27 14:33:45', '2025-04-27 14:33:45', 0);
+INSERT INTO `t_category` VALUES (20, '诗词', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0, 1);
+INSERT INTO `t_category` VALUES (21, '日记', '2025-04-27 14:20:01', '2025-04-27 14:20:01', 0, 2);
+INSERT INTO `t_category` VALUES (22, '日常', '2025-04-27 14:33:45', '2025-04-27 14:33:45', 0, 1);
 
 -- ----------------------------
 -- Table structure for t_statistics_article_pv
@@ -161,11 +162,19 @@ CREATE TABLE `t_statistics_article_pv`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_pv_date`(`pv_date`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '统计表 - 文章 PV (浏览量)' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '统计表 - 文章 PV (浏览量)' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_statistics_article_pv
 -- ----------------------------
+INSERT INTO `t_statistics_article_pv` VALUES (5, '2025-04-23', 100, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (6, '2025-04-24', 200, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (7, '2025-04-25', 150, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (8, '2025-04-26', 300, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (9, '2025-04-27', 250, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (10, '2025-04-28', 180, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (11, '2025-04-29', 220, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
+INSERT INTO `t_statistics_article_pv` VALUES (12, '2025-04-30', 280, '2025-04-30 08:58:12', '2025-04-30 08:58:12');
 
 -- ----------------------------
 -- Table structure for t_tag
@@ -177,16 +186,17 @@ CREATE TABLE `t_tag`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后一次更新时间',
   `is_deleted` tinyint(0) NOT NULL DEFAULT 0 COMMENT '逻辑删除标志位：0：未删除 1：已删除',
+  `articles_total` int(0) NOT NULL DEFAULT 0 COMMENT '此标签下文章总数',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_name`(`name`) USING BTREE,
   INDEX `idx_create_time`(`create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章标签表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章标签表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_tag
 -- ----------------------------
-INSERT INTO `t_tag` VALUES (38, '无产阶级', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0);
-INSERT INTO `t_tag` VALUES (39, '日常', '2025-04-27 22:30:01', '2025-04-27 22:30:01', 0);
+INSERT INTO `t_tag` VALUES (38, '无产阶级', '2025-04-27 14:04:39', '2025-04-27 14:04:39', 0, 3);
+INSERT INTO `t_tag` VALUES (39, '日常', '2025-04-27 22:30:01', '2025-04-27 22:30:01', 0, 1);
 
 -- ----------------------------
 -- Table structure for t_user
@@ -202,7 +212,7 @@ CREATE TABLE `t_user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_create_time`(`create_time`) USING BTREE,
   INDEX `idx_username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
@@ -221,7 +231,7 @@ CREATE TABLE `t_user_role`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role

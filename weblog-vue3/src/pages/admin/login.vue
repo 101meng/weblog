@@ -8,30 +8,38 @@
                 class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInLeft animate__fast">
                 <h2 class="font-bold text-4xl mb-14 text-white">Weblog 博客登录</h2>
                 <p class="text-white">患疾遂卒还谓天下事大，逆境泰山；
-胸有马列仍信劳动者赢，笑迎朝阳。</p>
+                    胸有马列仍信劳动者赢，笑迎朝阳。</p>
                 <!-- 指定图片宽度为父级元素的 1/2 -->
-                <img src="@/assets/developer.png" class="image-container"> 
+                <img src="@/assets/developer.png" class="image-container">
             </div>
         </div>
-        <div class="col-span-2 order-1 md:col-span-1 md:order-2 bg-white">
+        <div class="flex flex-col col-span-2 order-1 md:col-span-1 md:order-2 bg-white dark:bg-gray-800">
+            <!-- 黑夜白天开关 -->
+            <label class="switch ml-auto mt-4 mr-4">
+                <input type="checkbox" v-model="isLight" @click="toggleDark()">
+                <span class="slider"></span>
+                <span class="decoration"></span>
+            </label>
+
             <!-- flex-col 用于指定子元素垂直排列 -->
             <div
                 class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInRight animate__fast">
                 <!-- 大标题，设置字体粗细、大小、下边距 -->
-                <h1 class="font-bold text-4xl mb-5">欢迎回来</h1>
+                <h1 class="font-bold text-4xl mb-5 dark:text-white">欢迎回来</h1>
                 <!-- 设置 flex 布局，内容垂直水平居中，文字颜色，以及子内容水平方向 x 轴间距 -->
-                <div class="flex items-center justify-center mb-7 text-gray-400 space-x-2">
+                <div class="flex items-center justify-center mb-7 text-gray-400 space-x-2 dark:text-gray-500">
                     <!-- 左边横线，高度为 1px, 宽度为 16，背景色设置 -->
-                    <span class="h-[1px] w-16 bg-gray-200"></span>
+                    <span class="h-[1px] w-16 bg-gray-200 dark:bg-gray-700"></span>
                     <span>账号密码登录</span>
                     <!-- 右边横线 -->
-                    <span class="h-[1px] w-16 bg-gray-200"></span>
+                    <span class="h-[1px] w-16 bg-gray-200 dark:bg-gray-700"></span>
                 </div>
                 <!-- 引入 Element Plus 表单组件，移动端设置宽度为 5/6，PC 端设置为 2/5 -->
                 <el-form class="w-5/6 md:w-2/5" ref="formRef" :rules="rules" :model="form">
                     <el-form-item prop="username">
                         <!-- 输入框组件 -->
-                        <el-input size="large" v-model="form.username" placeholder="请输入用户名" :prefix-icon="User" clearable />
+                        <el-input size="large" v-model="form.username" placeholder="请输入用户名" :prefix-icon="User"
+                            clearable />
                     </el-form-item>
                     <el-form-item prop="password">
                         <!-- 密码框组件 -->
@@ -40,7 +48,8 @@
                     </el-form-item>
                     <el-form-item>
                         <!-- 登录按钮，宽度设置为 100% -->
-                        <el-button class="w-full mt-2" size="large" :loading="loading" type="primary" @click="onSubmit">登录</el-button>
+                        <el-button class="w-full mt-2" size="large" :loading="loading" type="primary"
+                            @click="onSubmit">登录</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -54,9 +63,12 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { login } from '@/api/admin/user'
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import { showMessage} from '@/composables/util'
+import { showMessage } from '@/composables/util'
 import { setToken } from '@/composables/cookie'
 import { useUserStore } from '@/stores/user'
+import { useDark, useToggle } from '@vueuse/core'
+// 导入 element-plus 暗黑 css
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const userStore = useUserStore()
 
@@ -65,8 +77,6 @@ const form = reactive({
     username: 'test',
     password: 'test'
 })
-
-
 
 const router = useRouter()
 // 登录按钮加载
@@ -127,10 +137,10 @@ const onSubmit = () => {
                 showMessage(message, 'error')
             }
         })
-        .finally(() => {
-            // 结束加载
-            loading.value = false
-        })
+            .finally(() => {
+                // 结束加载
+                loading.value = false
+            })
     })
 }
 
@@ -153,8 +163,109 @@ onBeforeUnmount(() => {
     document.removeEventListener('keyup', onKeyUp)
 })
 
+// 是否是白天
+const isLight = ref(true)
+const isDark = useDark({
+    onChanged(dark) {
+        // update the dom, call the API or something
+        console.log('onchange:' + dark)
+        if (dark) {
+            // 给 body 添加 class="dark"
+            document.documentElement.classList.add('dark');
+            // 设置 switch 的值
+            isLight.value = false
+        } else {
+            // 移除 body 中添加 class="dark"
+            document.documentElement.classList.remove('dark');
+            isLight.value = true
+        }
+    },
+})
+const toggleDark = useToggle(isDark)
 
 </script>
+
+<style scoped>
+/* The switch - the box around the slider */
+.switch {
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+    width: 3.8em;
+    height: 2.2em;
+    cursor: pointer;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    --background: #1a1a1a;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background);
+    transition: .5s;
+    border-radius: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.6em;
+    width: 1.6em;
+    border-radius: 50%;
+    left: 8%;
+    bottom: 10%;
+    box-shadow: inset 10px -5px 0px 0px #f9d71c;
+    background: var(--background);
+    transition: .5s;
+    transform: rotate(-20deg);
+}
+
+/* 恢复 decoration 样式 */
+.decoration {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    right: 20%;
+    top: 15%;
+    background: #e5f041e6;
+    backdrop-filter: blur(10px);
+    transition: all 0.5s;
+    box-shadow: -7px 10px 0 #e5f041e6, 8px 15px 0 #e5f041e6, -17px 1px 0 #e5f041e6,
+        -20px 10px 0 #e5f041e6, -7px 23px 0 #e5f041e6, -15px 25px 0 #e5f041e6;
+}
+
+input:checked ~ .decoration {
+    transform: translateX(-20px);
+    width: 10px;
+    height: 10px;
+    background: white;
+    box-shadow: -12px 0 0 white, -6px 0 0 1.6px white, 5px 15px 0 1px white,
+        1px 17px 0 white, 10px 17px 0 white;
+}
+
+input:checked + .slider {
+    background-color: #007bff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(120%) rotate(20deg);
+    box-shadow: inset 15px -4px 0px 15px #f9d71c;
+}
+</style>
 <style>
 .image-container {
     height: 300px;
@@ -162,7 +273,9 @@ onBeforeUnmount(() => {
     border-radius: 30px;
     transition: all 0.5s ease;
 }
+
 .image-container:hover {
-transform: scale(1.2); /* 鼠标悬停时放大1.2倍 */
+    transform: scale(1.2);
+    /* 鼠标悬停时放大1.2倍 */
 }
-</style>
+</style>    

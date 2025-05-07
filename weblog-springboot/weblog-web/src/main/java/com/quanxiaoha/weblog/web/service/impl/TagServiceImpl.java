@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 @Service
 @Slf4j
 public class TagServiceImpl implements TagService {
@@ -49,12 +48,10 @@ public class TagServiceImpl implements TagService {
         Long size = findTagListReqVO.getSize();
 
         List<TagDO> tagDOS = null;
-        // 如果接口入参中未指定 size
         if (Objects.isNull(size) || size == 0) {
-            // 查询所有分类
+            // 查询所有标签
             tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
         } else {
-            // 否则查询指定的数量
             tagDOS = tagMapper.selectByLimit(size);
         }
 
